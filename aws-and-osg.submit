@@ -1,12 +1,25 @@
-# The UNIVERSE defines an execution environment. You will almost always use VANILLA.
+
 Universe = vanilla
 
-# These are good base requirements for your jobs on OSG. It is specific on OS and
-# OS version, core cound and memory, and wants to use the software modules. 
-#Requirements = OSGVO_OS_STRING == "RHEL 6" && Arch == "X86_64" &&  HAS_MODULES == True
-Requirements = regexp("ec2.internal", Machine)
+# Job requirements (OS, cores, memory, ...)
+# When running on both AWS and OSG, make sure you have a requirements
+# line matching both resources. If you are using the supplied AMI,
+# OSGVO_OS_STRING == "RHEL 6" && Arch == "X86_64" should be sufficient,
+# or you can just always match on AWS resources separately.
+# Examples:
+#
+#    OSGVO_OS_STRING == "RHEL 6" && Arch == "X86_64"
+#
+#    regexp("ec2.internal", Machine) || (OSGVO_OS_STRING == "RHEL 6" && Arch == "X86_64")
+#
+Requirements = regexp("ec2.internal", Machine) || (OSGVO_OS_STRING == "RHEL 6" && Arch == "X86_64")
 request_cpus = 1
 request_memory = 1 GB
+request_disk = 1 GB
+
+# By default, AWS resources only runs jobs flagged that they are
+# allowed to run on AWS
++MayUseAWS = True
 
 # EXECUTABLE is the program your job will run It's often useful
 # to create a shell script to "wrap" your actual work.
