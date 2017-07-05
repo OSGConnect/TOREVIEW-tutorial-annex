@@ -43,5 +43,5 @@ periodic_release =  (NumJobStarts < 5) && ((CurrentTime - EnteredCurrentStatus) 
 
 # QUEUE is the "start button" - it launches any jobs that have been
 # specified thus far.
-Queue 1
+Queue 30
 
